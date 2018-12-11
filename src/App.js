@@ -6,10 +6,24 @@ import TodoList from './TodoList';
 class App extends Component {
   constructor() {
     super();
-      this.state = {
-        todos: []
-      };
+    this.state = {
+      todos: []
+    };
+  }
+
+  componentDidMount() {
+    // Load todos from local storage if available
+    const todos = localStorage.getItem('todos');
+    if (todos !== null) {
+      try {
+        this.setState({
+          todos: JSON.parse(todos)
+        });
+      } catch (e) {
+        console.error('Error while getting local tasks!');
+      }
     }
+  }
   
   addTodo = (e) => {
     e.preventDefault();
@@ -24,7 +38,8 @@ class App extends Component {
         "task": task,
         "created": Date.now(),
         "completed": false
-      })
+      });
+      localStorage.setItem('todos', JSON.stringify(prevState.todos));
       return {
         todos: prevState.todos
       }
@@ -34,6 +49,23 @@ class App extends Component {
   handleInputChange = (e) => {
     e.preventDefault();
     this.setState({input: e.target.value});
+  }
+
+  handleTask = (task) => {
+    // Finding index of task from array of tasks
+    let todos = this.state.todos;
+    const index = todos.indexOf(task);
+
+    if (task.completed) {
+      if (index > -1) {
+        todos.splice(index, 1);
+      }
+    } else {
+      todos[index].completed = true;
+    }
+    // Updating todos
+    this.setState({todos});
+    localStorage.setItem('todos', JSON.stringify(todos));
   }
 
   render() {
@@ -48,7 +80,7 @@ class App extends Component {
           />
           <button type="submit">Add</button>
         </form>
-        <TodoList tasks={this.state.todos} />
+        <TodoList tasks={this.state.todos} handleTask={this.handleTask} />
       </div>
     );
   }
