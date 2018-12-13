@@ -71,14 +71,15 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <h2>Do something Today</h2>
         <form name="form" onSubmit={this.addTodo}>
           <input
             name="task"
             ref="input"
             autoComplete="off"
-            placeholder="Add something to do"
+            placeholder="What do you wanna do?"
           />
-          <button type="submit">Add</button>
+          <button type="submit" className="add-btn">Add</button>
         </form>
         <TodoList tasks={this.state.todos} handleTask={this.handleTask} />
       </div>
