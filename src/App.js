@@ -34,14 +34,15 @@ class App extends Component {
 
     this.refs.input.value = '';
     this.setState((prevState) => {
-      prevState.todos.push({
+      const newTodo = {
         "task": task,
         "created": Date.now(),
         "completed": false
-      });
-      localStorage.setItem('todos', JSON.stringify(prevState.todos));
+      };
+      let todos = [...prevState.todos, newTodo];
+      localStorage.setItem('todos', JSON.stringify(todos));
       return {
-        todos: prevState.todos
+        todos: todos
       }
     });
   }
