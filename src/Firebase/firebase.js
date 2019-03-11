@@ -15,7 +15,7 @@ class Firebase {
   constructor() {
     app.initializeApp(config);
     this.auth = app.auth();
-    // this.db = app.database();
+    this.db = app.database();
   }
 
   doCreateUserWithEmailAndPassword = (email, password) =>
@@ -34,6 +34,14 @@ class Firebase {
   user = uid => this.db.ref(`users/${uid}`);
 
   users = () => this.db.ref('users');
+
+  saveTodo = (todos) => {
+    this.db.ref(`todo_${this.auth.currentUser.uid}`).set(todos);
+  }
+
+  getTodos = () => {
+    return this.db.ref(`todo_${this.auth.currentUser.uid}`);
+  }
 }
 
 export default Firebase;

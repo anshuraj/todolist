@@ -8,7 +8,7 @@ import SignIn from './SignIn';
 import SignUp from './SignUp';
 import Todo from './Todo';
 
-import { withAuthentication, withAuthorization } from './Session';
+import { withAuthentication } from './Session';
 
 class App extends Component {
   render() {
