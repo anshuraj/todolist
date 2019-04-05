@@ -14,11 +14,11 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <React.Fragment>
+        <div className="App">
           <Route exact path="/" component={Todo} />
           <Route exact path="/signin" component={SignIn} />
           <Route exact path="/signup" component={SignUp} />
-        </React.Fragment>
+        </div>
       </BrowserRouter>
     );
   }

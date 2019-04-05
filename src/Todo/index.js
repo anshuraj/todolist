@@ -10,7 +10,7 @@ const uniqueMerge = (arr) => {
   for(let i = 0; i < arr.length; ++i) {
     for(let j = i+1; j < arr.length; ++j) {
       if(arr[i].id === arr[j].id) {
-        if (arr[i].edited >= arr[j].edited) {
+         if (arr[i].edited >= arr[j].edited) {
           arr.splice(j--, 1);
         } else {
           arr.splice(i++, 1);
@@ -120,22 +120,30 @@ class Todo extends Component {
   }
 
   render() {
+    const { firebase } = this.props;
     return (
       <React.Fragment>
-        <div className="App">
-          <h2>Do something Today</h2>
+        <h2>Do something Today</h2>
 
-          {this.props.firebase.auth.currentUser ?
-            <button type="button" onClick={this.props.firebase.doSignOut}>
-              Sign Out
-            </button> :
-            <Link to="/signin">Sign in</Link>
-          }
+        {firebase.auth.currentUser ?
+          <button
+            type="button"
+            className="add-btn btn"
+            onClick={firebase.doSignOut}>
+            Sign Out
+          </button> :
+          <Link
+            to="/signin"
+            className="add-btn btn"
+          >
+            Sign in
+          </Link>
+        }
 
-          <AddTodoForm addTodo={this.addTodo} />
-          <TodoList tasks={this.state.todos || []} handleTask={this.handleTask} />
-        </div>
-        
+        <AddTodoForm addTodo={this.addTodo} />
+        <TodoList
+          tasks={this.state.todos || []}
+          handleTask={this.handleTask} />
       </React.Fragment>
     )
   }

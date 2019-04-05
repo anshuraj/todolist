@@ -19,6 +19,7 @@ class AddTodoForm extends React.Component {
         <input
           name="task"
           autoComplete="off"
+          className="todo-input"
           value={this.state.input}
           onChange={this.handleInputChange}
           placeholder="What do you wanna do?"

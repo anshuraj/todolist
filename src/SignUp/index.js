@@ -16,7 +16,7 @@ const INITIAL_STATE = {
 const SignUpPage = () => (
   <div className="center">
     <h1>SignUp</h1>
-      <Link to="/">Home</Link>
+      <Link className="add-btn btn" to="/">Home</Link>
       <SignUpForm />
       <p>Already have an account <Link to="/signin">Login</Link> instead </p>
   </div>
@@ -71,7 +71,7 @@ class SignUpFormBase extends Component {
       username === '';
 
     return (
-      <form onSubmit={this.onSubmit}>
+      <form onSubmit={this.onSubmit} className="user-form">
         <input
           name="username"
           value={username}
@@ -100,7 +100,13 @@ class SignUpFormBase extends Component {
           type="password"
           placeholder="Confirm Password"
         />
-        <button disabled={isInvalid} type="submit">Sign Up</button>
+        <button
+          disabled={isInvalid}
+          className="add-btn btn"
+          type="submit"
+        >
+          Sign Up
+        </button>
         {error && <p>{error.message}</p>}
       </form>
     );
