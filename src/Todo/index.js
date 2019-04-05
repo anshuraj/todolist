@@ -7,8 +7,8 @@ import { withAuthentication } from '../Session';
 import uuid from '../uuid';
 
 const uniqueMerge = (arr) => {
-  for(let i=0; i<arr.length; ++i) {
-    for(let j=i+1; j<arr.length; ++j) {
+  for(let i = 0; i < arr.length; ++i) {
+    for(let j = i+1; j < arr.length; ++j) {
       if(arr[i].id === arr[j].id) {
         if (arr[i].edited >= arr[j].edited) {
           arr.splice(j--, 1);
@@ -32,12 +32,15 @@ class Todo extends Component {
   componentWillReceiveProps() {
     const { firebase } = this.props;
     let cloudTodos = [];
+    let finalTodos = [];
 
-    if (this.props.firebase.auth.currentUser) {
+    if (firebase.auth.currentUser) {
       firebase.getTodos().on('value', snapshot => {
         cloudTodos = snapshot.val() || [];
         const localTodos = JSON.parse(localStorage.getItem('todos'));
-        const finalTodos = uniqueMerge(localTodos.concat(cloudTodos));
+        if (localTodos) {
+          finalTodos = uniqueMerge(localTodos.concat(cloudTodos));
+        }
         localStorage.setItem('todos', JSON.stringify(finalTodos));
         firebase.saveTodo(finalTodos);
         this.setState({
@@ -103,7 +106,7 @@ class Todo extends Component {
 
     if (task.completed && index > -1) {
       // If task is completed then remove it.
-      todos.splice(index, 1);
+      todos[index].deleted = true;
     } else {
       todos[index].completed = true;
       todos[index].edited = Date.now();
