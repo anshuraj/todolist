@@ -10,7 +10,13 @@ const TodoList = (props) => {
             <li key={todo.created} className={`task shadow${todo.completed ? ` completed` : ``}`}>
               {
                 isURL(todo.task) ?
-                  <a href={todo.task}>{todo.task}</a> :
+                  <a
+                    href={todo.task}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {todo.task}
+                  </a> :
                   todo.task
               }
               <button onClick={() => props.handleTask(todo)}>
